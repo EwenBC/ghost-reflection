@@ -8,9 +8,8 @@
 
 From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
-From GhostTT.autosubst Require Import CCAST GAST core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST SubstNotations ContextDecl
-  Scoping TermMode Conversion.
+From GhostTT.autosubst Require Import CCAST GAST core unscoped CCAST_rasimpl GAST_rasimpl.
+From GhostTT Require Import Util ContextDecl Scoping TermMode Conversion.
 From GhostTT Require Export Univ TermNotations.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 

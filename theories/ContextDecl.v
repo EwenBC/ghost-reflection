@@ -1,6 +1,5 @@
 From Stdlib Require Import Utf8 List.
 From GhostTT.autosubst Require Import GAST CCAST.
-From GhostTT Require Import BasicAST.
 
 Set Primitive Projections.
 

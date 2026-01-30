@@ -1,7 +1,8 @@
 (** GAST support for rasimpl **)
 
 From Stdlib Require Import Utf8 List.
-From GhostTT.autosubst Require Import core unscoped GAST RAsimpl.
+From GhostTT.autosubst Require Import core unscoped GAST.
+From GhostTT.autosubst Require Export RAsimpl.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 Import ListNotations.
 

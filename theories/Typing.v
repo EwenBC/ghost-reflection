@@ -1,6 +1,6 @@
 From Stdlib Require Import Utf8 List.
-From GhostTT.autosubst Require Import GAST unscoped RAsimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST SubstNotations ContextDecl CastRemoval
+From GhostTT.autosubst Require Import GAST unscoped GAST_rasimpl.
+From GhostTT Require Import Util ContextDecl CastRemoval
   TermMode Scoping Conversion.
 From GhostTT Require Export Univ TermNotations.
 
@@ -278,15 +278,8 @@ Inductive wf : context → Prop :=
       Γ ⊢ A : Sort m i →
       wf (Γ ,, (m, A)).
 
-Create HintDb gtt_conv discriminated.
 Create HintDb gtt_type discriminated.
 
-Hint Resolve conv_beta reveal_hide conv_if_true conv_if_false conv_nat_elim_zero
-  conv_nat_elim_succ conv_vec_elim_nil conv_vec_elim_cons cong_Prop cong_Pi
-  cong_lam cong_app cong_Erased cong_hide cong_reveal cong_Reveal cong_gheq
-  cong_if cong_succ cong_nat_elim cong_vec cong_vnil cong_vcons cong_vec_elim
-  cong_bot_elim conv_refl
-: gtt_conv.
 
 Hint Resolve type_var type_sort type_pi type_lam type_app type_erased type_hide
   type_reveal type_Reveal type_toRev type_fromRev type_gheq type_ghrefl
@@ -295,8 +288,6 @@ Hint Resolve type_var type_sort type_pi type_lam type_app type_erased type_hide
   type_bot_elim
 : gtt_type.
 
-Ltac gconv :=
-  unshelve typeclasses eauto with gtt_scope gtt_conv shelvedb ; shelve_unifiable.
 
 Ltac gtype :=
   unshelve typeclasses eauto with gtt_scope gtt_type shelvedb ; shelve_unifiable.

@@ -2,7 +2,7 @@ From Stdlib Require Import Utf8 List.
 From Equations Require Import Equations.
 
 From GhostTT.autosubst Require Import GAST.
-From GhostTT Require Import Util BasicAST ContextDecl Scoping.
+From GhostTT Require Import Util ContextDecl Scoping.
 
 Import ListNotations.
 

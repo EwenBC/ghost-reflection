@@ -5,8 +5,8 @@
 **)
 
 From Stdlib Require Import Utf8 List.
-From GhostTT.autosubst Require Import GAST unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import BasicAST SubstNotations ContextDecl CastRemoval.
+From GhostTT.autosubst Require Import GAST unscoped CCAST_rasimpl GAST_rasimpl.
+From GhostTT Require Import SubstNotations ContextDecl CastRemoval.
 
 Import ListNotations.
 

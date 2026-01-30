@@ -26,6 +26,7 @@ theories/Typing.v
 theories/BasicMetaTheory.v
 
 theories/CScoping.v
+theories/CConversion.v
 theories/CTyping.v
 theories/CCMetaTheory.v
 

@@ -1,5 +1,5 @@
 From GhostTT.autosubst Require Import core unscoped.
-From GhostTT Require Import BasicAST.
+From GhostTT Require Export BasicAST.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 

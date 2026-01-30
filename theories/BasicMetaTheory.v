@@ -1,8 +1,8 @@
 (** Basic meta-theory before building the model **)
 
 From Stdlib Require Import Utf8 List.
-From GhostTT.autosubst Require Import GAST unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST SubstNotations ContextDecl CastRemoval
+From GhostTT.autosubst Require Import GAST unscoped CCAST_rasimpl GAST_rasimpl.
+From GhostTT Require Import Util SubstNotations ContextDecl CastRemoval
   TermMode Scoping Conversion Typing.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 

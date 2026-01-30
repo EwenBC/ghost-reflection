@@ -1,7 +1,8 @@
 (** CCAST support for rasimpl **)
 
 From Stdlib Require Import Utf8 List.
-From GhostTT.autosubst Require Import core unscoped CCAST RAsimpl.
+From GhostTT.autosubst Require Import core unscoped CCAST.
+From GhostTT.autosubst Require Export RAsimpl.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 Import ListNotations.
 
