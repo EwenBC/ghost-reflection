@@ -44,8 +44,8 @@ time-of-build-before.log
 time-of-build-both.log
 time-of-build-pretty.log
 
-Makefile.coq
-Makefile.coq.conf
+Makefile.rocq
+Makefile.rocq.conf
 
 .DS_Store
 

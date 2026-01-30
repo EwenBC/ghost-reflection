@@ -4,7 +4,7 @@ From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
 From GhostTT.autosubst Require Import CCAST GAST core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
 From GhostTT Require Import Util BasicAST CastRemoval SubstNotations ContextDecl
-  CScoping Scoping CTyping TermMode Typing BasicMetaTheory CCMetaTheory Erasure
+  CScoping Scoping Conversion CTyping TermMode Typing BasicMetaTheory CCMetaTheory Erasure
   Revival.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 

@@ -3,7 +3,7 @@
 From Stdlib Require Import Utf8 List.
 From GhostTT.autosubst Require Import GAST unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
 From GhostTT Require Import Util BasicAST SubstNotations ContextDecl CastRemoval
-  TermMode Scoping Typing.
+  TermMode Scoping Conversion Typing.
 From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 From Equations Require Import Equations.
