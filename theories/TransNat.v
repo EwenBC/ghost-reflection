@@ -6,10 +6,10 @@
 
 ***)
 
-From Coq Require Import Utf8 List Bool Lia.
+From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
 From GhostTT Require Import Util BasicAST.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 Import ListNotations.
 

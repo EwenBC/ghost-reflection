@@ -1,9 +1,9 @@
-From Coq Require Import Utf8 List Bool Lia.
+From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
 From GhostTT.autosubst Require Import CCAST GAST core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
 From GhostTT Require Import Util BasicAST CastRemoval SubstNotations ContextDecl
   CScoping Scoping CTyping TermMode Typing BasicMetaTheory CCMetaTheory.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 Import ListNotations.
 Import CombineNotations.
@@ -85,9 +85,9 @@ Definition mdmk (m : mode) :=
 
 (** Erasure translation **)
 
-Reserved Notation "⟦ G | u '⟧ε'" (at level 9, G, u at next level).
-Reserved Notation "⟦ G | u '⟧τ'" (at level 9, G, u at next level).
-Reserved Notation "⟦ G | u '⟧∅'" (at level 9, G, u at next level).
+Reserved Notation "⟦ G | u '⟧ε'" (at level 0, G, u at next level).
+Reserved Notation "⟦ G | u '⟧τ'" (at level 0, G, u at next level).
+Reserved Notation "⟦ G | u '⟧∅'" (at level 0, G, u at next level).
 
 Equations erase_term (Γ : scope) (t : term) : cterm := {
   ⟦ Γ | var x ⟧ε := if relv Γ x then cvar x else cDummy ;
@@ -150,7 +150,7 @@ where "⟦ G | u '⟧ε'" := (erase_term G u)
 where "⟦ G | u '⟧τ'" := (cEl ⟦ G | u ⟧ε)
 where "⟦ G | u '⟧∅'" := (cErr ⟦ G | u ⟧ε).
 
-Reserved Notation "⟦ G '⟧ε'" (at level 9, G at next level).
+Reserved Notation "⟦ G '⟧ε'" (at level 0, G at next level).
 
 Equations erase_ctx (Γ : context) : ccontext := {
   ⟦ [] ⟧ε := [] ;

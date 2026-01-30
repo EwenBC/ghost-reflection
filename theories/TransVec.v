@@ -12,7 +12,7 @@
 
 ***)
 
-From Coq Require Import Utf8 List Bool Lia.
+From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
 From GhostTT Require Import Util BasicAST.
 From GhostTT Require Import TransNat.

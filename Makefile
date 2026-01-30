@@ -1,11 +1,11 @@
-all: Makefile.coq
-	$(MAKE) -f Makefile.coq
+all: Makefile.rocq
+	$(MAKE) -f Makefile.rocq
 
-clean: Makefile.coq
-	$(MAKE) -f Makefile.coq clean
+clean: Makefile.rocq
+	$(MAKE) -f Makefile.rocq clean
 
-Makefile.coq:
-	coq_makefile -f _CoqProject -o Makefile.coq
+Makefile.rocq:
+	rocq makefile -f _CoqProject -o Makefile.rocq
 
 autosubst:
 	cd theories/autosubst ; \
@@ -16,7 +16,7 @@ clean-assumptions: all
 
 force _CoqProject Makefile: ;
 
-%: Makefile.coq force
-	@+$(MAKE) -f Makefile.coq $@
+%: Makefile.rocq force
+	@+$(MAKE) -f Makefile.rocq $@
 
 .PHONY: all clean clean-assumptions autosubst

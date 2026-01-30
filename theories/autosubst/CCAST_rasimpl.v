@@ -1,8 +1,8 @@
 (** CCAST support for rasimpl **)
 
-From Coq Require Import Utf8 List.
+From Stdlib Require Import Utf8 List.
 From GhostTT.autosubst Require Import core unscoped CCAST RAsimpl.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 Import ListNotations.
 
 Inductive quoted_subst :=
