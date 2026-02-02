@@ -20,10 +20,13 @@ theories/Scoping.v
 theories/TermMode.v
 theories/Univ.v
 theories/TermNotations.v
+theories/Conversion.v
+
 theories/Typing.v
 theories/BasicMetaTheory.v
 
 theories/CScoping.v
+theories/CConversion.v
 theories/CTyping.v
 theories/CCMetaTheory.v
 
@@ -38,6 +41,7 @@ theories/FreeTheorem.v
 theories/Examples.v
 
 theories/RTyping.v
+
 theories/Potential.v
 theories/ElimReflection.v
 

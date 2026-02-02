@@ -1,10 +1,10 @@
 (** Basic meta-theory of the target CC **)
 
-From Coq Require Import Utf8 List.
-From GhostTT.autosubst Require Import CCAST unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST SubstNotations ContextDecl CScoping
+From Stdlib Require Import Utf8 List.
+From GhostTT.autosubst Require Import CCAST unscoped CCAST_rasimpl.
+From GhostTT Require Import Util SubstNotations ContextDecl CScoping CConversion
   CTyping.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 From Equations Require Import Equations.
 

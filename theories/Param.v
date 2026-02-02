@@ -1,12 +1,12 @@
 (*** Parametricity ***)
 
-From Coq Require Import Utf8 List Bool Lia.
+From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
-From GhostTT.autosubst Require Import CCAST GAST core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST CastRemoval SubstNotations ContextDecl
-  CScoping Scoping CTyping TermMode Typing BasicMetaTheory CCMetaTheory Erasure
+From GhostTT.autosubst Require Import CCAST GAST core unscoped CCAST_rasimpl GAST_rasimpl.
+From GhostTT Require Import Util CastRemoval SubstNotations ContextDecl
+  CScoping Scoping CConversion CTyping TermMode Conversion Typing BasicMetaTheory CCMetaTheory Erasure
   Revival.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 Import ListNotations.
 Import CombineNotations.
@@ -43,16 +43,16 @@ Definition rpm_lift (t : cterm) :=
   vreg ⋅ t.
 
 Notation "⟦ G | u '⟧pε'":=
-  (epm_lift ⟦ G | u ⟧ε) (at level 9, G, u at next level).
+  (epm_lift ⟦ G | u ⟧ε) (at level 0, G, u at next level).
 
 Notation "⟦ G | u '⟧pτ'":=
-  (epm_lift ⟦ G | u ⟧τ) (at level 9, G, u at next level).
+  (epm_lift ⟦ G | u ⟧τ) (at level 0, G, u at next level).
 
 Notation "⟦ G | u '⟧p∅'":=
-  (epm_lift ⟦ G | u ⟧∅) (at level 9, G, u at next level).
+  (epm_lift ⟦ G | u ⟧∅) (at level 0, G, u at next level).
 
 Notation "⟦ G | u '⟧pv'":=
-  (rpm_lift ⟦ G | u ⟧v) (at level 9, G, u at next level).
+  (rpm_lift ⟦ G | u ⟧v) (at level 0, G, u at next level).
 
 (** Parametricity translation
 
@@ -114,7 +114,7 @@ Definition pcastP Ae AP uv vv vP eP PP tP :=
         (S ⋅ vP)
     )).
 
-Reserved Notation "⟦ G | u '⟧p'" (at level 9, G, u at next level).
+Reserved Notation "⟦ G | u '⟧p'" (at level 0, G, u at next level).
 
 (** Translation of Pi types, to factorise a bit **)
 
@@ -321,7 +321,7 @@ Equations param_term (Γ : scope) (t : term) : cterm := {
 }
 where "⟦ G | u '⟧p'" := (param_term G u).
 
-Reserved Notation "⟦ G '⟧p'" (at level 9, G at next level).
+Reserved Notation "⟦ G '⟧p'" (at level 0, G at next level).
 
 Equations param_ctx (Γ : context) : ccontext := {
   ⟦ [] ⟧p := [] ;

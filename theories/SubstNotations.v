@@ -4,10 +4,8 @@
 
 **)
 
-From Coq Require Import Utf8 List.
-From GhostTT.autosubst Require Import core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl GAST CCAST.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
-Import ListNotations.
+From Stdlib Require Import Utf8 List.
+From GhostTT.autosubst Require Import core unscoped CCAST_rasimpl GAST_rasimpl GAST CCAST.
 
 Notation "a ⋅ x" :=
   (ren1 a x) (at level 20, right associativity) : subst_scope.

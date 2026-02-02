@@ -11,7 +11,7 @@ https://zenodo.org/records/11500966
 We build the syntax of our type theories using [Autosubst 2 OCaml].
 We provide the generated files, but if you want to run generation again you can
 simply run `make autosubst` after having installed [Autosubst 2 OCaml] for
-Coq 8.19.
+Coq 9.0.
 
 Just run
 ```sh
@@ -23,13 +23,13 @@ It will generate `GAST.v`, `CCAST.v`, `unscoped.v` and `core.v`.
 
 ## Building the project
 
-We use Coq 8.19 and Equations 1.3.
+We use Coq 9.0 and Equations 1.3.
 You can get Coq and Equations using [opam] as follows:
 
 ```sh
 opam repo add coq-released https://coq.inria.fr/opam/released
 opam update
-opam pin add coq 8.19.0
+opam pin add coq 9.0
 opam install coq-equations coq-autosubst-ocaml
 ```
 

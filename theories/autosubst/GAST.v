@@ -1,6 +1,6 @@
 From GhostTT.autosubst Require Import core unscoped.
-From GhostTT Require Import BasicAST.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From GhostTT Require Export BasicAST.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 
 Module Core.
@@ -66,7 +66,8 @@ Lemma congr_lam {s0 : mode} {s1 : term} {s2 : term} {t0 : mode} {t1 : term}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => lam x s1 s2) H0))
-            (ap (fun x => lam t0 x s2) H1)) (ap (fun x => lam t0 t1 x) H2)).
+            (ap (fun x => lam t0 x s2) H1))
+         (ap (fun x => lam t0 t1 x) H2)).
 Qed.
 
 Lemma congr_app {s0 : term} {s1 : term} {t0 : term} {t1 : term}
@@ -130,7 +131,8 @@ Lemma congr_gheq {s0 : term} {s1 : term} {s2 : term} {t0 : term} {t1 : term}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => gheq x s1 s2) H0))
-            (ap (fun x => gheq t0 x s2) H1)) (ap (fun x => gheq t0 t1 x) H2)).
+            (ap (fun x => gheq t0 x s2) H1))
+         (ap (fun x => gheq t0 t1 x) H2)).
 Qed.
 
 Lemma congr_ghrefl {s0 : term} {s1 : term} {t0 : term} {t1 : term}
@@ -1068,7 +1070,8 @@ exact (fun n =>
                 (eq_sym
                    (compSubstRen_term tau_term shift
                       (funcomp (ren_term shift) tau_term) (fun x => eq_refl)
-                      (sigma n'))) (ap (ren_term shift) (Eq n')))
+                      (sigma n')))
+                (ap (ren_term shift) (Eq n')))
        | O => eq_refl
        end).
 Qed.
@@ -1416,17 +1419,14 @@ Qed.
 Class Up_term X Y :=
     up_term : X -> Y.
 
-#[global]Instance Subst_term : (Subst1 _ _ _) := @subst_term.
+#[global] Instance Subst_term : (Subst1 _ _ _) := @subst_term.
 
-#[global]Instance Up_term_term : (Up_term _ _) := @up_term_term.
+#[global] Instance Up_term_term : (Up_term _ _) := @up_term_term.
 
-#[global]Instance Ren_term : (Ren1 _ _ _) := @ren_term.
+#[global] Instance Ren_term : (Ren1 _ _ _) := @ren_term.
 
 #[global]
 Instance VarInstance_term : (Var _ _) := @var.
-
-Notation "[ sigma_term ]" := (subst_term sigma_term)
-( at level 1, left associativity, only printing)  : fscope.
 
 Notation "s [ sigma_term ]" := (subst_term sigma_term s)
 ( at level 7, left associativity, only printing)  : subst_scope.
@@ -1434,9 +1434,6 @@ Notation "s [ sigma_term ]" := (subst_term sigma_term s)
 Notation "↑__term" := up_term (only printing)  : subst_scope.
 
 Notation "↑__term" := up_term_term (only printing)  : subst_scope.
-
-Notation "⟨ xi_term ⟩" := (ren_term xi_term)
-( at level 1, left associativity, only printing)  : fscope.
 
 Notation "s ⟨ xi_term ⟩" := (ren_term xi_term s)
 ( at level 7, left associativity, only printing)  : subst_scope.
@@ -1522,7 +1519,8 @@ Ltac asimpl := check_no_evars;
                 repeat
                  unfold VarInstance_term, Var, ids, Ren_term, Ren1, ren1,
                   Up_term_term, Up_term, up_term, Subst_term, Subst1, subst1
-                  in *; asimpl'; minimize.
+                  in *;
+                asimpl'; minimize.
 
 Tactic Notation "asimpl" "in" hyp(J) := revert J; asimpl; intros J.
 
@@ -1645,13 +1643,15 @@ Fixpoint allfvTriv_term (p_term : nat -> Prop) (H_term : forall x, p_term x)
                  (conj (allfvTriv_term p_term H_term s4)
                     (conj
                        (allfvTriv_term (upAllfv_term_term p_term)
-                          (upAllfvTriv_term_term H_term) s5) I)))))
+                          (upAllfvTriv_term_term H_term) s5)
+                       I)))))
   | lam s0 s1 s2 =>
       conj I
         (conj (allfvTriv_term p_term H_term s1)
            (conj
               (allfvTriv_term (upAllfv_term_term p_term)
-                 (upAllfvTriv_term_term H_term) s2) I))
+                 (upAllfvTriv_term_term H_term) s2)
+              I))
   | app s0 s1 =>
       conj (allfvTriv_term p_term H_term s0)
         (conj (allfvTriv_term p_term H_term s1) I)
@@ -1787,7 +1787,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | lam s0 s1 s2 =>
       fun HP =>
       conj I
@@ -1808,7 +1809,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | app s0 s1 =>
       fun HP =>
       conj
@@ -1822,21 +1824,24 @@ allfv_term p_term s -> allfv_term q_term s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | Erased s0 =>
       fun HP =>
       conj
         (allfvImpl_term p_term q_term H_term s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | hide s0 =>
       fun HP =>
       conj
         (allfvImpl_term p_term q_term H_term s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | reveal s0 s1 s2 =>
       fun HP =>
       conj
@@ -1860,7 +1865,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | Reveal s0 s1 =>
       fun HP =>
       conj
@@ -1874,7 +1880,8 @@ allfv_term p_term s -> allfv_term q_term s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | toRev s0 s1 s2 =>
       fun HP =>
       conj
@@ -1898,7 +1905,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | fromRev s0 s1 s2 =>
       fun HP =>
       conj
@@ -1922,7 +1930,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | gheq s0 s1 s2 =>
       fun HP =>
       conj
@@ -1946,7 +1955,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | ghrefl s0 s1 =>
       fun HP =>
       conj
@@ -1960,7 +1970,8 @@ allfv_term p_term s -> allfv_term q_term s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | ghcast s0 s1 s2 s3 s4 s5 =>
       fun HP =>
       conj
@@ -2035,7 +2046,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | tbool => fun HP => I
   | ttrue => fun HP => I
   | tfalse => fun HP => I
@@ -2089,7 +2101,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tnat => fun HP => I
   | tzero => fun HP => I
   | tsucc s0 =>
@@ -2098,7 +2111,8 @@ allfv_term p_term s -> allfv_term q_term s :=
         (allfvImpl_term p_term q_term H_term s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | tnat_elim s0 s1 s2 s3 s4 =>
       fun HP =>
       conj I
@@ -2149,7 +2163,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tvec s0 s1 =>
       fun HP =>
       conj
@@ -2163,14 +2178,16 @@ allfv_term p_term s -> allfv_term q_term s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | tvnil s0 =>
       fun HP =>
       conj
         (allfvImpl_term p_term q_term H_term s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | tvcons s0 s1 s2 =>
       fun HP =>
       conj
@@ -2194,7 +2211,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | tvec_elim s0 s1 s2 s3 s4 s5 s6 =>
       fun HP =>
       conj I
@@ -2288,7 +2306,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                          end
                                      end
                                  end
-                             end) I))))))
+                             end)
+                          I))))))
   | bot => fun HP => I
   | bot_elim s0 s1 s2 =>
       fun HP =>
@@ -2309,7 +2328,8 @@ allfv_term p_term s -> allfv_term q_term s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   end.
 
 Lemma upAllfvRenL_term_term (p : nat -> Prop) (xi : nat -> nat) :
@@ -2375,7 +2395,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                          end
                                      end
                                  end
-                             end)) I)))))
+                             end))
+                       I)))))
   | lam s0 s1 s2 =>
       fun H =>
       conj I
@@ -2397,7 +2418,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | app s0 s1 =>
       fun H =>
       conj
@@ -2410,19 +2432,22 @@ allfv_term (funcomp p_term xi_term) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | Erased s0 =>
       fun H =>
       conj
         (allfvRenL_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | hide s0 =>
       fun H =>
       conj
         (allfvRenL_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | reveal s0 s1 s2 =>
       fun H =>
       conj
@@ -2445,7 +2470,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | Reveal s0 s1 =>
       fun H =>
       conj
@@ -2458,7 +2484,8 @@ allfv_term (funcomp p_term xi_term) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | toRev s0 s1 s2 =>
       fun H =>
       conj
@@ -2481,7 +2508,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | fromRev s0 s1 s2 =>
       fun H =>
       conj
@@ -2504,7 +2532,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | gheq s0 s1 s2 =>
       fun H =>
       conj
@@ -2527,7 +2556,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ghrefl s0 s1 =>
       fun H =>
       conj
@@ -2540,7 +2570,8 @@ allfv_term (funcomp p_term xi_term) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | ghcast s0 s1 s2 s3 s4 s5 =>
       fun H =>
       conj
@@ -2613,7 +2644,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | tbool => fun H => I
   | ttrue => fun H => I
   | tfalse => fun H => I
@@ -2666,7 +2698,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tnat => fun H => I
   | tzero => fun H => I
   | tsucc s0 =>
@@ -2674,7 +2707,8 @@ allfv_term (funcomp p_term xi_term) s :=
       conj
         (allfvRenL_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | tnat_elim s0 s1 s2 s3 s4 =>
       fun H =>
       conj I
@@ -2724,7 +2758,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tvec s0 s1 =>
       fun H =>
       conj
@@ -2737,13 +2772,15 @@ allfv_term (funcomp p_term xi_term) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | tvnil s0 =>
       fun H =>
       conj
         (allfvRenL_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | tvcons s0 s1 s2 =>
       fun H =>
       conj
@@ -2766,7 +2803,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | tvec_elim s0 s1 s2 s3 s4 s5 s6 =>
       fun H =>
       conj I
@@ -2859,7 +2897,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                          end
                                      end
                                  end
-                             end) I))))))
+                             end)
+                          I))))))
   | bot => fun H => I
   | bot_elim s0 s1 s2 =>
       fun H =>
@@ -2880,7 +2919,8 @@ allfv_term (funcomp p_term xi_term) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   end.
 
 Lemma upAllfvRenR_term_term (p : nat -> Prop) (xi : nat -> nat) :
@@ -2946,7 +2986,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                          end
                                      end
                                  end
-                             end)) I)))))
+                             end))
+                       I)))))
   | lam s0 s1 s2 =>
       fun H =>
       conj I
@@ -2969,7 +3010,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | app s0 s1 =>
       fun H =>
       conj
@@ -2982,19 +3024,22 @@ allfv_term p_term (ren_term xi_term s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | Erased s0 =>
       fun H =>
       conj
         (allfvRenR_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | hide s0 =>
       fun H =>
       conj
         (allfvRenR_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | reveal s0 s1 s2 =>
       fun H =>
       conj
@@ -3017,7 +3062,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | Reveal s0 s1 =>
       fun H =>
       conj
@@ -3030,7 +3076,8 @@ allfv_term p_term (ren_term xi_term s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | toRev s0 s1 s2 =>
       fun H =>
       conj
@@ -3053,7 +3100,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | fromRev s0 s1 s2 =>
       fun H =>
       conj
@@ -3076,7 +3124,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | gheq s0 s1 s2 =>
       fun H =>
       conj
@@ -3099,7 +3148,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ghrefl s0 s1 =>
       fun H =>
       conj
@@ -3112,7 +3162,8 @@ allfv_term p_term (ren_term xi_term s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | ghcast s0 s1 s2 s3 s4 s5 =>
       fun H =>
       conj
@@ -3185,7 +3236,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | tbool => fun H => I
   | ttrue => fun H => I
   | tfalse => fun H => I
@@ -3238,7 +3290,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tnat => fun H => I
   | tzero => fun H => I
   | tsucc s0 =>
@@ -3246,7 +3299,8 @@ allfv_term p_term (ren_term xi_term s) :=
       conj
         (allfvRenR_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | tnat_elim s0 s1 s2 s3 s4 =>
       fun H =>
       conj I
@@ -3296,7 +3350,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    end
                                end
                            end
-                       end) I))))
+                       end)
+                    I))))
   | tvec s0 s1 =>
       fun H =>
       conj
@@ -3309,13 +3364,15 @@ allfv_term p_term (ren_term xi_term s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | tvnil s0 =>
       fun H =>
       conj
         (allfvRenR_term p_term xi_term s0 match H with
                                           | conj H _ => H
-                                          end) I
+                                          end)
+        I
   | tvcons s0 s1 s2 =>
       fun H =>
       conj
@@ -3338,7 +3395,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | tvec_elim s0 s1 s2 s3 s4 s5 s6 =>
       fun H =>
       conj I
@@ -3431,7 +3489,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                          end
                                      end
                                  end
-                             end) I))))))
+                             end)
+                          I))))))
   | bot => fun H => I
   | bot_elim s0 s1 s2 =>
       fun H =>
@@ -3452,7 +3511,8 @@ allfv_term p_term (ren_term xi_term s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   end.
 
 End Allfv.
@@ -3461,9 +3521,9 @@ Module Extra.
 
 Import Core.
 
-#[global]Hint Opaque subst_term: rewrite.
+#[global] Hint Opaque subst_term: rewrite.
 
-#[global]Hint Opaque ren_term: rewrite.
+#[global] Hint Opaque ren_term: rewrite.
 
 End Extra.
 

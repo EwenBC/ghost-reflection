@@ -1,6 +1,6 @@
 From GhostTT.autosubst Require Import core unscoped.
-From GhostTT Require Import BasicAST.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From GhostTT Require Export BasicAST.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 
 Module Core.
@@ -88,7 +88,8 @@ Lemma congr_cPi {s0 : cmode} {s1 : cterm} {s2 : cterm} {t0 : cmode}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => cPi x s1 s2) H0))
-            (ap (fun x => cPi t0 x s2) H1)) (ap (fun x => cPi t0 t1 x) H2)).
+            (ap (fun x => cPi t0 x s2) H1))
+         (ap (fun x => cPi t0 t1 x) H2)).
 Qed.
 
 Lemma congr_clam {s0 : cmode} {s1 : cterm} {s2 : cterm} {t0 : cmode}
@@ -97,7 +98,8 @@ Lemma congr_clam {s0 : cmode} {s1 : cterm} {s2 : cterm} {t0 : cmode}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => clam x s1 s2) H0))
-            (ap (fun x => clam t0 x s2) H1)) (ap (fun x => clam t0 t1 x) H2)).
+            (ap (fun x => clam t0 x s2) H1))
+         (ap (fun x => clam t0 t1 x) H2)).
 Qed.
 
 Lemma congr_capp {s0 : cterm} {s1 : cterm} {t0 : cterm} {t1 : cterm}
@@ -199,7 +201,8 @@ Lemma congr_teq {s0 : cterm} {s1 : cterm} {s2 : cterm} {t0 : cterm}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => teq x s1 s2) H0))
-            (ap (fun x => teq t0 x s2) H1)) (ap (fun x => teq t0 t1 x) H2)).
+            (ap (fun x => teq t0 x s2) H1))
+         (ap (fun x => teq t0 t1 x) H2)).
 Qed.
 
 Lemma congr_trefl {s0 : cterm} {s1 : cterm} {t0 : cterm} {t1 : cterm}
@@ -215,7 +218,8 @@ Lemma congr_tJ {s0 : cterm} {s1 : cterm} {s2 : cterm} {t0 : cterm}
 Proof.
 exact (eq_trans
          (eq_trans (eq_trans eq_refl (ap (fun x => tJ x s1 s2) H0))
-            (ap (fun x => tJ t0 x s2) H1)) (ap (fun x => tJ t0 t1 x) H2)).
+            (ap (fun x => tJ t0 x s2) H1))
+         (ap (fun x => tJ t0 t1 x) H2)).
 Qed.
 
 Lemma congr_ebool : ebool = ebool.
@@ -465,23 +469,28 @@ exact (eq_trans
                                           (ap
                                              (fun x =>
                                               pvec_elim x s1 s2 s3 s4 s5 s6
-                                                s7 s8 s9 s10 s11) H0))
+                                                s7 s8 s9 s10 s11)
+                                             H0))
                                        (ap
                                           (fun x =>
                                            pvec_elim t0 x s2 s3 s4 s5 s6 s7
-                                             s8 s9 s10 s11) H1))
+                                             s8 s9 s10 s11)
+                                          H1))
                                     (ap
                                        (fun x =>
                                         pvec_elim t0 t1 x s3 s4 s5 s6 s7 s8
-                                          s9 s10 s11) H2))
+                                          s9 s10 s11)
+                                       H2))
                                  (ap
                                     (fun x =>
                                      pvec_elim t0 t1 t2 x s4 s5 s6 s7 s8 s9
-                                       s10 s11) H3))
+                                       s10 s11)
+                                    H3))
                               (ap
                                  (fun x =>
                                   pvec_elim t0 t1 t2 t3 x s5 s6 s7 s8 s9 s10
-                                    s11) H4))
+                                    s11)
+                                 H4))
                            (ap
                               (fun x =>
                                pvec_elim t0 t1 t2 t3 t4 x s6 s7 s8 s9 s10 s11)
@@ -492,7 +501,8 @@ exact (eq_trans
                            H6))
                      (ap
                         (fun x =>
-                         pvec_elim t0 t1 t2 t3 t4 t5 t6 x s8 s9 s10 s11) H7))
+                         pvec_elim t0 t1 t2 t3 t4 t5 t6 x s8 s9 s10 s11)
+                        H7))
                   (ap
                      (fun x => pvec_elim t0 t1 t2 t3 t4 t5 t6 t7 x s9 s10 s11)
                      H8))
@@ -528,37 +538,45 @@ exact (eq_trans
                                           (ap
                                              (fun x =>
                                               pvec_elimG x s1 s2 s3 s4 s5 s6
-                                                s7 s8 s9 s10 s11) H0))
+                                                s7 s8 s9 s10 s11)
+                                             H0))
                                        (ap
                                           (fun x =>
                                            pvec_elimG t0 x s2 s3 s4 s5 s6 s7
-                                             s8 s9 s10 s11) H1))
+                                             s8 s9 s10 s11)
+                                          H1))
                                     (ap
                                        (fun x =>
                                         pvec_elimG t0 t1 x s3 s4 s5 s6 s7 s8
-                                          s9 s10 s11) H2))
+                                          s9 s10 s11)
+                                       H2))
                                  (ap
                                     (fun x =>
                                      pvec_elimG t0 t1 t2 x s4 s5 s6 s7 s8 s9
-                                       s10 s11) H3))
+                                       s10 s11)
+                                    H3))
                               (ap
                                  (fun x =>
                                   pvec_elimG t0 t1 t2 t3 x s5 s6 s7 s8 s9 s10
-                                    s11) H4))
+                                    s11)
+                                 H4))
                            (ap
                               (fun x =>
                                pvec_elimG t0 t1 t2 t3 t4 x s6 s7 s8 s9 s10
-                                 s11) H5))
+                                 s11)
+                              H5))
                         (ap
                            (fun x =>
                             pvec_elimG t0 t1 t2 t3 t4 t5 x s7 s8 s9 s10 s11)
                            H6))
                      (ap
                         (fun x =>
-                         pvec_elimG t0 t1 t2 t3 t4 t5 t6 x s8 s9 s10 s11) H7))
+                         pvec_elimG t0 t1 t2 t3 t4 t5 t6 x s8 s9 s10 s11)
+                        H7))
                   (ap
                      (fun x =>
-                      pvec_elimG t0 t1 t2 t3 t4 t5 t6 t7 x s9 s10 s11) H8))
+                      pvec_elimG t0 t1 t2 t3 t4 t5 t6 t7 x s9 s10 s11)
+                     H8))
                (ap (fun x => pvec_elimG t0 t1 t2 t3 t4 t5 t6 t7 t8 x s10 s11)
                   H9))
             (ap (fun x => pvec_elimG t0 t1 t2 t3 t4 t5 t6 t7 t8 t9 x s11) H10))
@@ -588,17 +606,20 @@ exact (eq_trans
                                     (ap
                                        (fun x =>
                                         pvec_elimP x s1 s2 s3 s4 s5 s6 s7 s8
-                                          s9) H0))
+                                          s9)
+                                       H0))
                                  (ap
                                     (fun x =>
                                      pvec_elimP t0 x s2 s3 s4 s5 s6 s7 s8 s9)
                                     H1))
                               (ap
                                  (fun x =>
-                                  pvec_elimP t0 t1 x s3 s4 s5 s6 s7 s8 s9) H2))
+                                  pvec_elimP t0 t1 x s3 s4 s5 s6 s7 s8 s9)
+                                 H2))
                            (ap
                               (fun x =>
-                               pvec_elimP t0 t1 t2 x s4 s5 s6 s7 s8 s9) H3))
+                               pvec_elimP t0 t1 t2 x s4 s5 s6 s7 s8 s9)
+                              H3))
                         (ap
                            (fun x => pvec_elimP t0 t1 t2 t3 x s5 s6 s7 s8 s9)
                            H4))
@@ -1748,7 +1769,8 @@ exact (fun n =>
                 (eq_sym
                    (compRenRen_cterm zeta_cterm shift
                       (funcomp shift zeta_cterm) (fun x => eq_refl)
-                      (sigma n'))) (ap (ren_cterm shift) (Eq n')))
+                      (sigma n')))
+                (ap (ren_cterm shift) (Eq n')))
        | O => eq_refl
        end).
 Qed.
@@ -2484,18 +2506,15 @@ Qed.
 Class Up_cterm X Y :=
     up_cterm : X -> Y.
 
-#[global]Instance Subst_cterm : (Subst1 _ _ _) := @subst_cterm.
+#[global] Instance Subst_cterm : (Subst1 _ _ _) := @subst_cterm.
 
 #[global]
 Instance Up_cterm_cterm : (Up_cterm _ _) := @up_cterm_cterm.
 
-#[global]Instance Ren_cterm : (Ren1 _ _ _) := @ren_cterm.
+#[global] Instance Ren_cterm : (Ren1 _ _ _) := @ren_cterm.
 
 #[global]
 Instance VarInstance_cterm : (Var _ _) := @cvar.
-
-Notation "[ sigma_cterm ]" := (subst_cterm sigma_cterm)
-( at level 1, left associativity, only printing)  : fscope.
 
 Notation "s [ sigma_cterm ]" := (subst_cterm sigma_cterm s)
 ( at level 7, left associativity, only printing)  : subst_scope.
@@ -2503,9 +2522,6 @@ Notation "s [ sigma_cterm ]" := (subst_cterm sigma_cterm s)
 Notation "↑__cterm" := up_cterm (only printing)  : subst_scope.
 
 Notation "↑__cterm" := up_cterm_cterm (only printing)  : subst_scope.
-
-Notation "⟨ xi_cterm ⟩" := (ren_cterm xi_cterm)
-( at level 1, left associativity, only printing)  : fscope.
 
 Notation "s ⟨ xi_cterm ⟩" := (ren_cterm xi_cterm s)
 ( at level 7, left associativity, only printing)  : subst_scope.
@@ -2592,7 +2608,8 @@ Ltac asimpl := check_no_evars;
                 repeat
                  unfold VarInstance_cterm, Var, ids, Ren_cterm, Ren1, ren1,
                   Up_cterm_cterm, Up_cterm, up_cterm, Subst_cterm, Subst1,
-                  subst1 in *; asimpl'; minimize.
+                  subst1 in *;
+                asimpl'; minimize.
 
 Tactic Notation "asimpl" "in" hyp(J) := revert J; asimpl; intros J.
 
@@ -2778,13 +2795,15 @@ allfv_cterm p_cterm s :=
         (conj (allfvTriv_cterm p_cterm H_cterm s1)
            (conj
               (allfvTriv_cterm (upAllfv_cterm_cterm p_cterm)
-                 (upAllfvTriv_cterm_cterm H_cterm) s2) I))
+                 (upAllfvTriv_cterm_cterm H_cterm) s2)
+              I))
   | clam s0 s1 s2 =>
       conj I
         (conj (allfvTriv_cterm p_cterm H_cterm s1)
            (conj
               (allfvTriv_cterm (upAllfv_cterm_cterm p_cterm)
-                 (upAllfvTriv_cterm_cterm H_cterm) s2) I))
+                 (upAllfvTriv_cterm_cterm H_cterm) s2)
+              I))
   | capp s0 s1 =>
       conj (allfvTriv_cterm p_cterm H_cterm s0)
         (conj (allfvTriv_cterm p_cterm H_cterm s1) I)
@@ -2970,7 +2989,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | clam s0 s1 s2 =>
       fun HP =>
       conj I
@@ -2992,7 +3012,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | capp s0 s1 =>
       fun HP =>
       conj
@@ -3006,7 +3027,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | cunit => fun HP => I
   | ctt => fun HP => I
   | ctop => fun HP => I
@@ -3031,7 +3053,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | cty s0 => fun HP => conj I I
   | ctyval s0 s1 s2 =>
       fun HP =>
@@ -3052,7 +3075,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | ctyerr => fun HP => I
   | cEl s0 =>
       fun HP =>
@@ -3060,28 +3084,32 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | cErr s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | squash s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | sq s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | sq_elim s0 s1 s2 =>
       fun HP =>
       conj
@@ -3105,7 +3133,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | teq s0 s1 s2 =>
       fun HP =>
       conj
@@ -3129,7 +3158,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | trefl s0 s1 =>
       fun HP =>
       conj
@@ -3143,7 +3173,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | tJ s0 s1 s2 =>
       fun HP =>
       conj
@@ -3167,7 +3198,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | ebool => fun HP => I
   | etrue => fun HP => I
   | efalse => fun HP => I
@@ -3242,7 +3274,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | pbool => fun HP => I
   | ptrue => fun HP => I
   | pfalse => fun HP => I
@@ -3283,7 +3316,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                 end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | enat => fun HP => I
   | ezero => fun HP => I
   | esucc s0 =>
@@ -3292,7 +3326,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | enat_elim s0 s1 s2 s3 =>
       fun HP =>
       conj
@@ -3330,7 +3365,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                 end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pnat => fun HP => I
   | pzero => fun HP => I
   | psucc s0 =>
@@ -3339,7 +3375,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | pnat_elim s0 s1 s2 s3 s4 s5 s6 s7 =>
       fun HP =>
       conj
@@ -3463,7 +3500,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                             end
                                         end
                                     end
-                                end) I)))))))
+                                end)
+                             I)))))))
   | pnat_elimP s0 s1 s2 s3 s4 s5 =>
       fun HP =>
       conj
@@ -3538,21 +3576,24 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | evec s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | evnil s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | evcons s0 s1 =>
       fun HP =>
       conj
@@ -3566,7 +3607,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
               | conj _ HP => match HP with
                              | conj HP _ => HP
                              end
-              end) I)
+              end)
+           I)
   | evec_elim s0 s1 s2 s3 =>
       fun HP =>
       conj
@@ -3604,7 +3646,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                 end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvec s0 s1 s2 s3 =>
       fun HP =>
       conj
@@ -3642,14 +3685,16 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                 end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvnil s0 =>
       fun HP =>
       conj
         (allfvImpl_cterm p_cterm q_cterm H_cterm s0
            match HP with
            | conj HP _ => HP
-           end) I
+           end)
+        I
   | pvcons s0 s1 s2 =>
       fun HP =>
       conj
@@ -3673,7 +3718,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                     | conj HP _ => HP
                                     end
                      end
-                 end) I))
+                 end)
+              I))
   | pvec_elim s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun HP =>
       conj
@@ -3977,7 +4023,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimG s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun HP =>
       conj
@@ -4281,7 +4328,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimP s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 =>
       fun HP =>
       conj
@@ -4478,7 +4526,8 @@ allfv_cterm p_cterm s -> allfv_cterm q_cterm s :=
                                                   end
                                               end
                                           end
-                                      end) I)))))))))
+                                      end)
+                                   I)))))))))
   end.
 
 Lemma upAllfvRenL_cterm_cterm (p : nat -> Prop) (xi : nat -> nat) :
@@ -4521,7 +4570,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | clam s0 s1 s2 =>
       fun H =>
       conj I
@@ -4544,7 +4594,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | capp s0 s1 =>
       fun H =>
       conj
@@ -4557,7 +4608,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | cunit => fun H => I
   | ctt => fun H => I
   | ctop => fun H => I
@@ -4582,7 +4634,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | cty s0 => fun H => conj I I
   | ctyval s0 s1 s2 =>
       fun H =>
@@ -4603,32 +4656,37 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ctyerr => fun H => I
   | cEl s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | cErr s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | squash s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | sq s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | sq_elim s0 s1 s2 =>
       fun H =>
       conj
@@ -4651,7 +4709,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | teq s0 s1 s2 =>
       fun H =>
       conj
@@ -4674,7 +4733,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | trefl s0 s1 =>
       fun H =>
       conj
@@ -4687,7 +4747,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | tJ s0 s1 s2 =>
       fun H =>
       conj
@@ -4710,7 +4771,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ebool => fun H => I
   | etrue => fun H => I
   | efalse => fun H => I
@@ -4784,7 +4846,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | pbool => fun H => I
   | ptrue => fun H => I
   | pfalse => fun H => I
@@ -4823,7 +4886,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | enat => fun H => I
   | ezero => fun H => I
   | esucc s0 =>
@@ -4831,7 +4895,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | enat_elim s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -4867,7 +4932,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pnat => fun H => I
   | pzero => fun H => I
   | psucc s0 =>
@@ -4875,7 +4941,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | pnat_elim s0 s1 s2 s3 s4 s5 s6 s7 =>
       fun H =>
       conj
@@ -4997,7 +5064,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                             end
                                         end
                                     end
-                                end) I)))))))
+                                end)
+                             I)))))))
   | pnat_elimP s0 s1 s2 s3 s4 s5 =>
       fun H =>
       conj
@@ -5070,19 +5138,22 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | evec s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | evnil s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | evcons s0 s1 =>
       fun H =>
       conj
@@ -5095,7 +5166,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | evec_elim s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -5131,7 +5203,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvec s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -5167,13 +5240,15 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvnil s0 =>
       fun H =>
       conj
         (allfvRenL_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | pvcons s0 s1 s2 =>
       fun H =>
       conj
@@ -5196,7 +5271,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | pvec_elim s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun H =>
       conj
@@ -5494,7 +5570,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimG s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun H =>
       conj
@@ -5792,7 +5869,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimP s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 =>
       fun H =>
       conj
@@ -5986,7 +6064,8 @@ allfv_cterm (funcomp p_cterm xi_cterm) s :=
                                                   end
                                               end
                                           end
-                                      end) I)))))))))
+                                      end)
+                                   I)))))))))
   end.
 
 Lemma upAllfvRenR_cterm_cterm (p : nat -> Prop) (xi : nat -> nat) :
@@ -6029,7 +6108,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | clam s0 s1 s2 =>
       fun H =>
       conj I
@@ -6052,7 +6132,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                       | conj H _ => H
                                       end
                         end
-                    end)) I))
+                    end))
+              I))
   | capp s0 s1 =>
       fun H =>
       conj
@@ -6065,7 +6146,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | cunit => fun H => I
   | ctt => fun H => I
   | ctop => fun H => I
@@ -6090,7 +6172,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | cty s0 => fun H => conj I I
   | ctyval s0 s1 s2 =>
       fun H =>
@@ -6111,32 +6194,37 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ctyerr => fun H => I
   | cEl s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | cErr s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | squash s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | sq s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | sq_elim s0 s1 s2 =>
       fun H =>
       conj
@@ -6159,7 +6247,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | teq s0 s1 s2 =>
       fun H =>
       conj
@@ -6182,7 +6271,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | trefl s0 s1 =>
       fun H =>
       conj
@@ -6195,7 +6285,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | tJ s0 s1 s2 =>
       fun H =>
       conj
@@ -6218,7 +6309,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | ebool => fun H => I
   | etrue => fun H => I
   | efalse => fun H => I
@@ -6292,7 +6384,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | pbool => fun H => I
   | ptrue => fun H => I
   | pfalse => fun H => I
@@ -6331,7 +6424,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | enat => fun H => I
   | ezero => fun H => I
   | esucc s0 =>
@@ -6339,7 +6433,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | enat_elim s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -6375,7 +6470,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pnat => fun H => I
   | pzero => fun H => I
   | psucc s0 =>
@@ -6383,7 +6479,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | pnat_elim s0 s1 s2 s3 s4 s5 s6 s7 =>
       fun H =>
       conj
@@ -6505,7 +6602,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                             end
                                         end
                                     end
-                                end) I)))))))
+                                end)
+                             I)))))))
   | pnat_elimP s0 s1 s2 s3 s4 s5 =>
       fun H =>
       conj
@@ -6578,19 +6676,22 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                       end
                                   end
                               end
-                          end) I)))))
+                          end)
+                       I)))))
   | evec s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | evnil s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | evcons s0 s1 =>
       fun H =>
       conj
@@ -6603,7 +6704,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
               | conj _ H => match H with
                             | conj H _ => H
                             end
-              end) I)
+              end)
+           I)
   | evec_elim s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -6639,7 +6741,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvec s0 s1 s2 s3 =>
       fun H =>
       conj
@@ -6675,13 +6778,15 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                           end
                             end
                         end
-                    end) I)))
+                    end)
+                 I)))
   | pvnil s0 =>
       fun H =>
       conj
         (allfvRenR_cterm p_cterm xi_cterm s0 match H with
                                              | conj H _ => H
-                                             end) I
+                                             end)
+        I
   | pvcons s0 s1 s2 =>
       fun H =>
       conj
@@ -6704,7 +6809,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                    | conj H _ => H
                                    end
                      end
-                 end) I))
+                 end)
+              I))
   | pvec_elim s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun H =>
       conj
@@ -7002,7 +7108,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimG s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 =>
       fun H =>
       conj
@@ -7300,7 +7407,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                                         end
                                                     end
                                                 end
-                                            end) I)))))))))))
+                                            end)
+                                         I)))))))))))
   | pvec_elimP s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 =>
       fun H =>
       conj
@@ -7494,7 +7602,8 @@ allfv_cterm p_cterm (ren_cterm xi_cterm s) :=
                                                   end
                                               end
                                           end
-                                      end) I)))))))))
+                                      end)
+                                   I)))))))))
   end.
 
 End Allfv.
@@ -7503,9 +7612,9 @@ Module Extra.
 
 Import Core.
 
-#[global]Hint Opaque subst_cterm: rewrite.
+#[global] Hint Opaque subst_cterm: rewrite.
 
-#[global]Hint Opaque ren_cterm: rewrite.
+#[global] Hint Opaque ren_cterm: rewrite.
 
 End Extra.
 

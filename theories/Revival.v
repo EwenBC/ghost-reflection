@@ -1,9 +1,9 @@
-From Coq Require Import Utf8 List Bool Lia.
+From Stdlib Require Import Utf8 List Bool Lia.
 From Equations Require Import Equations.
-From GhostTT.autosubst Require Import CCAST GAST core unscoped RAsimpl CCAST_rasimpl GAST_rasimpl.
-From GhostTT Require Import Util BasicAST CastRemoval SubstNotations ContextDecl
-  CScoping Scoping CTyping TermMode Typing BasicMetaTheory CCMetaTheory Erasure.
-From Coq Require Import Setoid Morphisms Relation_Definitions.
+From GhostTT.autosubst Require Import CCAST GAST core unscoped CCAST_rasimpl GAST_rasimpl.
+From GhostTT Require Import Util CastRemoval SubstNotations ContextDecl
+  CScoping Scoping Conversion CConversion CTyping TermMode Typing BasicMetaTheory CCMetaTheory Erasure.
+From Stdlib Require Import Setoid Morphisms Relation_Definitions.
 
 Import ListNotations.
 Import CombineNotations.
@@ -21,7 +21,7 @@ Definition ghv (Γ : scope) x :=
 
 (** Revival translation **)
 
-Reserved Notation "⟦ G | u '⟧v'" (at level 9, G, u at next level).
+Reserved Notation "⟦ G | u '⟧v'" (at level 0, G, u at next level).
 
 Equations revive_term (Γ : scope) (t : term) : cterm := {
   ⟦ Γ | var x ⟧v := if ghv Γ x then cvar x else cDummy ;
@@ -79,7 +79,7 @@ Equations revive_term (Γ : scope) (t : term) : cterm := {
 }
 where "⟦ G | u '⟧v'" := (revive_term G u).
 
-Reserved Notation "⟦ G '⟧v'" (at level 9, G at next level).
+Reserved Notation "⟦ G '⟧v'" (at level 0, G at next level).
 
 Equations revive_ctx (Γ : context) : ccontext := {
   ⟦ [] ⟧v := [] ;

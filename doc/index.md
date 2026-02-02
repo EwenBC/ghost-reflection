@@ -41,7 +41,8 @@ corresponding instances for CC and GTT.
 | [TermMode]        | Syntactic computation of mode              |
 | [Univ]            | Utility on universes (successor, max…)     |
 | [TermNotations]   | Some shorthands for implication and so on… |
-| [Typing]          | Conversion and typing judgements           |
+| [CConversion]     | Conversion                                 |
+| [Typing]          | Typing judgements           |
 | [BasicMetaTheory] | Meta-theory like substitution and validity |
 
 [CastRemoval]: coqdoc/GhostTT.CastRemoval.html
@@ -57,6 +58,7 @@ corresponding instances for CC and GTT.
 | Module         | Description               |
 | :------------- | :------------------------ |
 | [CScoping]     | Scoping                   |
+| [CConversion]  | Conversion                |
 | [CTyping]      | Typing                    |
 | [CCMetaTheory] | Substitution and the like |
 

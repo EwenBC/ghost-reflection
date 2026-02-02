@@ -1,0 +1,16 @@
+GLOBFILES = $(VFILES:.v=.glob)
+
+DOCDIR = doc
+ROCQDOCDIR = $(DOCDIR)/rocqdoc
+
+ROCQDOCHTMLFLAGS = -toc --toc-depth 0 --no-lib-name --lib-subtitles --html \
+  --index indexpage --parse-comments -utf8
+
+rocqdoc: $(GLOBFILES) $(VFILES) $(HEADER) $(FOOTER) $(RESOURCES) $(FRONTPAGE)
+	$(SHOW)'COQDOC -d $(ROCQDOCDIR)'
+	$(HIDE)mkdir -p $(ROCQDOCDIR)
+	$(HIDE)$(COQDOC) $(ROCQDOCHTMLFLAGS) $(COQDOCLIBS) -d $(ROCQDOCDIR) $(VFILES)
+.PHONY: rocqdoc
+
+clean::
+	$(HIDE)rm -rf $(ROCQDOCDIR)/*.html
